@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 定义了命名空间 -->
 <mapper namespace="com.tencent.wxcloudrun.dao.CountersMapper">
 
+    <!-- 定义了一个结果集映射，id为countersMapper，类型为com.tencent.wxcloudrun.model.Counter -->
     <resultMap id="countersMapper" type="com.tencent.wxcloudrun.model.Counter">
+        <!-- 定义了id属性，对应数据库中的id列 -->
         <id property="id" column="id"/>
+        <!-- 定义了count属性，对应数据库中的count列 -->
         <result property="count" column="count"/>
+        <!-- 定义了createdAt属性，对应数据库中的createdAt列，类型为java.time.LocalDateTime -->
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
+        <!-- 定义了updatedAt属性，对应数据库中的updatedAt列，类型为java.time.LocalDateTime -->
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
 
+    <!-- 定义了一个查询语句，id为getCounter，返回结果集映射为countersMapper，参数类型为java.lang.Integer -->
     <select id="getCounter" resultMap="countersMapper" parameterType="java.lang.Integer">
         SELECT `id`, `count`, `createdAt`, `updatedAt`
         FROM Counters
         WHERE id = #{id}
     </select>
 
+    <!-- 定义了一个删除语句，id为clearCount，参数类型为java.lang.Integer -->
     <delete id="clearCount" parameterType="java.lang.Integer">
         DELETE
         FROM Counters
@@ -22,9 +30,10 @@
         limit 1
     </delete>
 
+    <!-- 定义了一个更新语句，id为upsertCount，参数类型为com.tencent.wxcloudrun.model.Counter -->
     <update id="upsertCount" parameterType="com.tencent.wxcloudrun.model.Counter">
         INSERT INTO `Counters`(`id`, `count`)
-        VALUE(#{id}, #{count}) 
+        VALUE(#{id}, #{count})
         ON DUPLICATE KEY UPDATE count=#{count}
     </update>
 
