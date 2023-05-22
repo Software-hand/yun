@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description:
  */
 
-// 控制器 接受客户端请求
+// @RestController 转为josn 返回文本   @Controller  返回网页+数据
 @RestController
 public class HelloController {
 
